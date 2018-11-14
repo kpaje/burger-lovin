@@ -3,7 +3,6 @@ var connection = require("../config/connection.js");
 // ===============
 //  MYSQL HELPERS
 // ===============
-
 function printQuestionMarks(num) {
     var arr = [];
     for (var i = 0; i < num; i++) {
@@ -28,16 +27,16 @@ function objToSql(ob) {
 }
 
 var orm = {
-    all: function (tableInput, cb) {
+    all: function (tableInput, callback) {
         var queryString = "SELECT * FROM " + tableInput + ";";
         connection.query(queryString, function (err, result) {
             if (err) {
                 throw err;
             }
-            cb(result);
+            callback(result);
         });
     },
-    create: function (table, cols, vals, cb) {
+    create: function (table, cols, vals, callback) {
         var queryString = "INSERT INTO " + table;
 
         queryString += " (";
@@ -53,10 +52,10 @@ var orm = {
             if (err) {
                 throw err;
             }
-            cb(result);
+            callback(result);
         });
     },
-    update: function (table, objColVals, condition, cb) {
+    update: function (table, objColVals, condition, callback) {
         var queryString = "UPDATE " + table;
 
         queryString += " SET ";
@@ -69,11 +68,10 @@ var orm = {
             if (err) {
                 throw err;
             }
-
-            cb(result);
+            callback(result);
         });
     },
-    delete: function (table, condition, cb) {
+    delete: function (table, condition, callback) {
         var queryString = "DELETE FROM " + table;
         queryString += " WHERE ";
         queryString += condition;
@@ -82,8 +80,7 @@ var orm = {
             if (err) {
                 throw err;
             }
-
-            cb(result);
+            callback(result);
         });
     }
 };

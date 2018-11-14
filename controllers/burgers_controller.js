@@ -13,11 +13,9 @@ router.get("/", function (req, res) {
 });
 
 router.post("/api/burgers", function (req, res) {
-    burger.create([
-        "name", "sleepy"
-    ], [
-        req.body.name, req.body.sleepy
-    ], function (result) {
+    var cols = ["name", "devoured"];
+    var vals = [req.body.burger_name, req.body.devoured];
+    burger.create(cols, vals, function (result) {
         res.json({
             id: result.insertId
         });
@@ -26,11 +24,9 @@ router.post("/api/burgers", function (req, res) {
 
 router.put("/api/burgers/:id", function (req, res) {
     var condition = "id = " + req.params.id;
+    var objColVal = {devoured: req.body.devoured};
     console.log("condition", condition);
-
-    burger.update({
-        sleepy: req.body.sleepy
-    }, condition, function (result) {
+    burger.update(objColVal, condition, function (result) {
         if (result.changedRows == 0) {
             return res.status(404).end();
         } else {
@@ -41,7 +37,6 @@ router.put("/api/burgers/:id", function (req, res) {
 
 router.delete("/api/burgers/:id", function (req, res) {
     var condition = "id = " + req.params.id;
-
     burger.delete(condition, function (result) {
         if (result.affectedRows == 0) {
             return res.status(404).end();
