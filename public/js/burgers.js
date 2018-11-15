@@ -1,16 +1,16 @@
 $(function () {
     $(".change-sleep").on("click", function (event) {
         var id = $(this).data("id");
-        var newSleep = $(this).data("newsleep");
-        var newSleepState = {
-            sleepy: newSleep
+        var devoured = $(this).data("devoured");
+        var devouredState = {
+            devoured: devoured
         };
         $.ajax("/api/burgers/" + id, {
             type: "PUT",
-            data: newSleepState
+            data: devouredState
         }).then(
             function () {
-                console.log("changed sleep to", newSleep);
+                console.log("changed state to", devoured);
                 location.reload();
             }
         );
@@ -18,16 +18,16 @@ $(function () {
 
     $(".create-form").on("submit", function (event) {
         event.preventDefault();
-        var newCat = {
+        var newBurger = {
             name: $("#ca").val().trim(),
-            sleepy: $("[name=sleepy]:checked").val().trim()
+            devoured: $("[name=devoured]:checked").val().trim()
         };
         $.ajax("/api/burgers", {
             type: "POST",
-            data: newCat
+            data: newBurger
         }).then(
             function () {
-                console.log("created new cat");
+                console.log("created new burger");
                 location.reload();
             }
         );
